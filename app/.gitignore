@@ -1,0 +1,79 @@
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# ART/Dalvik
+*.dex
+
+# Java/Kotlin class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+build/
+**/build/
+
+# Gradle
+.gradle/
+local.properties
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+captures/
+.navigation/
+
+# Keystore files
+*.jks
+*.keystore
+*.pem
+
+# Signing configs
+signing.properties
+key.properties
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Kotlin
+.kotlin/
+
+# External Native Build
+.externalNativeBuild/
+.cxx/
+
+# NDK
+obj/
+
+# Google Services (optional - if it contains secrets)
+# google-services.json
+
+# Firebase Crashlytics
+com_crashlytics_export_strings.xml
+
+# IntelliJ
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# Temporary files
+*.tmp
+*.temp
+# Local Gradle configuration / secrets
+gradle.properties
