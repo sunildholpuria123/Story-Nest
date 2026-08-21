@@ -6,9 +6,31 @@ Users can create stories based on a child's **name, age, category, topic, mood, 
 
 ---
 
-# Application Screenshots
+📸 Screenshots
 
-<p align="center"> <a href="screenshots/image1.jpeg"></a> </p>
+🏠 Home
+
+<p align="center"> <img src="screenshots/image1.jpeg" width="250" alt="StoryNest Home Screen"> </p>
+
+✨ Create Story
+
+<p align="center"> <img src="screenshots/image6.jpeg" width="250" alt="Create Story Screen"> </p>
+
+📖 Story Reader
+
+<p align="center"> <img src="screenshots/image5.jpeg" width="250" alt="Story Reader Screen"> </p>
+
+📚 Library
+
+<p align="center"> <img src="screenshots/image2.jpeg" width="250" alt="Story Library Screen"> </p>
+
+❤️ Favorites
+
+<p align="center"> <img src="screenshots/image3.jpeg" width="250" alt="Favorites Screen"> </p>
+
+⚙️ Settings
+
+<p align="center"> <img src="screenshots/image4.jpeg" width="250" alt="Settings Screen"> </p>
 
 ## ✨ Features
 
