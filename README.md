@@ -8,7 +8,10 @@ Users can create stories based on a child's **name, age, category, topic, mood, 
 
 # Application Screenshots
 
-<p align="center"> <a href="screenshots/image1.jpeg"><img src="screenshots/image2.jpeg" width="220"></a> <a href="screenshots/image3.jpeg"><img src="screenshots/image4.jpeg" width="220"></a> <a href="screenshots/image5.jpeg"></a> </p>
+<p align="center"> <a href="screenshots/image1.jpeg" width="220">
+<img src="screenshots/image2.jpeg" width="220"></a>
+<a href="screenshots/image3.jpeg" width="220"><img src="screenshots/image4.jpeg" width="220"></a> 
+<a href="screenshots/image5.jpeg" width="220"></a> </p>
 
 ## ✨ Features
 
