@@ -57,4 +57,8 @@ sealed class Screen(
     data object Search : Screen(
         route = "search"
     )
+
+    data object Auth : Screen(
+        "auth"
+    )
 }

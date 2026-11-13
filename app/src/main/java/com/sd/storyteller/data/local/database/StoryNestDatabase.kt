@@ -15,7 +15,7 @@ import com.sd.storyteller.data.local.entity.StoryEntity
     entities = [
         StoryEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 
 )

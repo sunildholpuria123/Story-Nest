@@ -214,8 +214,8 @@ class SettingsRepository @Inject constructor(
     }
 
     fun getRemainingStoryAttempts(): Int {
-
-        val today =
+return 3
+        /*val today =
             java.text.SimpleDateFormat(
                 "yyyy-MM-dd",
                 java.util.Locale.US
@@ -233,7 +233,7 @@ class SettingsRepository @Inject constructor(
         return (
                 MAX_STORY_GENERATION_ATTEMPTS -
                         getStoryGenerationAttemptsToday()
-                ).coerceAtLeast(0)
+                ).coerceAtLeast(0)*/
     }
 
     companion object {

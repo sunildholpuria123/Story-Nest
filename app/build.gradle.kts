@@ -18,6 +18,12 @@ if (localPropertiesFile.exists()) {
         localProperties.load(it)
     }
 }
+val storyNestApiUrl = providers.gradleProperty(
+    "STORYNEST_API_BASE_URL"
+).orElse(
+    localProperties.getProperty("STORYNEST_API_BASE_URL")
+        ?: "https://storynest-backend.storynest-sunil.workers.dev/"
+).get()
 android {
     namespace = "com.sd.storyteller"
     compileSdk = 35
@@ -31,11 +37,30 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // This is your Cloudflare Worker URL, not a Gemini API key.
+        // Add STORYNEST_API_BASE_URL to local.properties for your deployment.
+        defaultConfig {
+            buildConfigField(
+                "String",
+                "STORYNEST_API_BASE_URL",
+                "\"$storyNestApiUrl\""
+            )
+        }
+
         buildConfigField(
             "String",
-            "GEMINI_API_KEY",
+            "SUPABASE_URL",
             "\"${localProperties.getProperty(
-                "GEMINI_API_KEY",
+                "SUPABASE_URL",
+                "https://example.supabase.co/"
+            )}\""
+        )
+
+        buildConfigField(
+            "String",
+            "SUPABASE_PUBLISHABLE_KEY",
+            "\"${localProperties.getProperty(
+                "SUPABASE_PUBLISHABLE_KEY",
                 ""
             )}\""
         )
@@ -151,7 +176,6 @@ dependencies {
     implementation(libs.okhttp.logging)
 
     implementation(libs.kotlinx.serialization.json)
-    implementation("com.google.genai:google-genai:1.16.0")
 
 }
 

@@ -17,15 +17,13 @@ interface StoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(
         story: StoryEntity
-    )
+    ): Long
 
-    @Query(
-        """
-        SELECT *
-        FROM stories
-        ORDER BY createdAt DESC
-    """
-    )
+    @Query("""
+    SELECT * FROM stories
+    WHERE isDeleted = 0
+    ORDER BY createdAt DESC
+""")
     fun getStories(): Flow<List<StoryEntity>>
 
     @Query(
@@ -54,47 +52,72 @@ interface StoryDao {
 
     @Query(
         """
-UPDATE stories
-SET isFavorite = :favorite
-WHERE id = :id
+    UPDATE stories
+    SET isFavorite = :favorite,
+        updatedAt = :updatedAt
+    WHERE id = :id
 """
     )
     suspend fun updateFavorite(
         id: Long,
-        favorite: Boolean
+        favorite: Boolean,
+        updatedAt: Long = System.currentTimeMillis()
     )
 
-    @Query(
-        """
-SELECT *
-FROM stories
-WHERE isFavorite = 1
-ORDER BY createdAt DESC
-"""
-    )
+    @Query("""
+    SELECT * FROM stories
+    WHERE isFavorite = 1 AND isDeleted = 0
+    ORDER BY createdAt DESC
+""")
     fun getFavoriteStories(): Flow<List<StoryEntity>>
 
 
-    @Query(
-        """
+    @Query("""
     UPDATE stories
-    SET lastReadSentence = :sentence
+    SET lastReadSentence = :sentence,
+        updatedAt = :updatedAt
     WHERE id = :storyId
-"""
-    )
+""")
     suspend fun updateReadingPosition(
         storyId: Long,
-        sentence: Int
+        sentence: Int,
+        updatedAt: Long = System.currentTimeMillis()
     )
 
-    @Query(
-        """
+    @Query("""
     SELECT * FROM stories
-    WHERE category = :category
+    WHERE category = :category AND isDeleted = 0
     ORDER BY id DESC
-    """
-    )
+""")
     fun observeStoriesByCategory(
         category: String
     ): Flow<List<StoryEntity>>
+
+    @Query("SELECT * FROM stories ORDER BY createdAt DESC")
+    suspend fun getAllStories(): List<StoryEntity>
+
+    @Query("SELECT * FROM stories WHERE cloudId = :cloudId LIMIT 1")
+    suspend fun getStoryByCloudId(cloudId: String): StoryEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertStory(story: StoryEntity)
+
+    @Query("""
+    UPDATE stories
+    SET isDeleted = 1,
+        updatedAt = :updatedAt
+    WHERE id = :storyId
+""")
+    suspend fun softDelete(
+        storyId: Long,
+        updatedAt: Long = System.currentTimeMillis()
+    )
+
+    @Query("""
+    SELECT * FROM stories
+    WHERE isDeleted = 0
+    ORDER BY createdAt DESC
+""")
+    fun getActiveStories(): Flow<List<StoryEntity>>
+
 }

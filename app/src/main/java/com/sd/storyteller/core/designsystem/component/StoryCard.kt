@@ -25,7 +25,6 @@ fun StoryCard(
 
     Card(
         modifier = modifier
-            .fillMaxWidth()
             .clickable(
                 onClick = onClick
             )

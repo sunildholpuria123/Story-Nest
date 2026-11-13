@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.sd.storyteller.feature.auth.AuthScreen
 import com.sd.storyteller.feature.category.ui.CategoryScreen
 import com.sd.storyteller.feature.create.ui.CreateStoryScreen
 import com.sd.storyteller.feature.favorites.ui.FavoritesScreen
@@ -215,6 +216,19 @@ fun StoryNestNavHost() {
                 SearchScreen(
                     navController =
                         navController
+                )
+            }
+
+            composable(Screen.Auth.route) {
+                AuthScreen(
+                    onAuthenticated = {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Auth.route) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
         }

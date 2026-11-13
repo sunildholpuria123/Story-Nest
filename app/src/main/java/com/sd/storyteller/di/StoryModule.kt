@@ -11,8 +11,11 @@ import com.sd.storyteller.core.setting.SettingsRepository
 import com.sd.storyteller.core.tts.StoryTextToSpeech
 import com.sd.storyteller.data.local.dao.StoryDao
 import com.sd.storyteller.data.local.database.StoryNestDatabase
+import com.sd.storyteller.data.local.secure.SecureTokenStorage
 import com.sd.storyteller.data.remote.api.GeminiApi
+import com.sd.storyteller.data.remote.api.SupabaseStoryApi
 import com.sd.storyteller.data.repository.StoryRepositoryImpl
+import com.sd.storyteller.data.repository.SupabaseAuthRepository
 import com.sd.storyteller.domain.repository.StoryRepository
 import com.sd.storyteller.domain.usecase.DeleteStoryUseCase
 import com.sd.storyteller.domain.usecase.GenerateStoryUseCase
@@ -36,10 +39,14 @@ object StoryModule {
     @Singleton
     fun provideStoryRepository(
         api: GeminiApi,
-        dao: StoryDao
+        dao: StoryDao,
+        supabaseStoryApi: SupabaseStoryApi,
+        tokenStorage: SecureTokenStorage,
+        authRepository: SupabaseAuthRepository
     ): StoryRepository {
 
-        return StoryRepositoryImpl(api, dao)
+        return StoryRepositoryImpl(api, dao,supabaseStoryApi,tokenStorage,authRepository
+        )
     }
 
     @Provides
@@ -62,7 +69,7 @@ object StoryModule {
             StoryNestDatabase::class.java,
             "storynest.db"
         ).fallbackToDestructiveMigration()
-//            .addMigrations(MIGRATION_3_4,MIGRATION_4_5)
+           .addMigrations(MIGRATION_1_2)
             .build()
     }
 
@@ -138,51 +145,16 @@ object StoryModule {
         return UpdateReadingPositionUseCase(repository)
     }
 
-    val MIGRATION_3_4 = object : Migration(3, 4) {
-
-        override fun migrate(
-            db: SupportSQLiteDatabase
-        ) {
-
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL(
                 """
             ALTER TABLE stories
-            ADD COLUMN language TEXT NOT NULL DEFAULT 'hi-IN'
+            ADD COLUMN isDeleted INTEGER NOT NULL DEFAULT 0
             """.trimIndent()
             )
         }
     }
-    val MIGRATION_4_5 =
-        object : Migration(4, 5) {
-
-            override fun migrate(
-                db: SupportSQLiteDatabase
-            ) {
-
-                /*
-                 * Before version 5:
-                 *
-                 * 0 was being used as the default value.
-                 *
-                 * Version 5 uses:
-                 *
-                 * -1 = never read
-                 *  0 = first sentence
-                 * >0 = progressed
-                 *
-                 * Existing records with 0 were previously
-                 * considered "not read", so migrate them
-                 * to -1.
-                 */
-                db.execSQL(
-                    """
-                UPDATE stories
-                SET lastReadSentence = -1
-                WHERE lastReadSentence = 0
-                """.trimIndent()
-                )
-            }
-        }
 
 
     @Provides

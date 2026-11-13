@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "storynest-backend",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-02",
+  "observability": {
+    "enabled": true
+  },
+  "ratelimits": [
+    {
+      "name": "STORY_LIMITER",
+      "namespace_id": "731204",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ]
+}

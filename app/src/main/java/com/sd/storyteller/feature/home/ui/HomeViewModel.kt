@@ -6,6 +6,7 @@ package com.sd.storyteller.feature.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sd.storyteller.data.repository.SupabaseAuthRepository
 import com.sd.storyteller.domain.usecase.GetStoriesUseCase
 import com.sd.storyteller.feature.home.state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel

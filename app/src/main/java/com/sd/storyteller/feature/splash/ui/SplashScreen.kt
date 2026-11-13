@@ -18,19 +18,33 @@ import kotlinx.coroutines.delay
 /**
  * Created by SDHOLPURIA on 31-07-2026.
  */
+
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.sd.storyteller.feature.auth.AuthViewModel
+
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
+    val state by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        delay(2000)
-
-        navController.navigate(Screen.Home.route) {
-            popUpTo(Screen.Splash.route) {
-                inclusive = true
+    LaunchedEffect(state.isLoading, state.isAuthenticated) {
+        if (!state.isLoading) {
+            val destination = if (state.isAuthenticated) {
+                Screen.Home.route
+            } else {
+                Screen.Auth.route
             }
-            launchSingleTop = true
+
+            navController.navigate(destination) {
+                popUpTo(Screen.Splash.route) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
         }
     }
 
@@ -41,7 +55,6 @@ fun SplashScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
         Text(
             text = "📖",
             style = MaterialTheme.typography.displayLarge

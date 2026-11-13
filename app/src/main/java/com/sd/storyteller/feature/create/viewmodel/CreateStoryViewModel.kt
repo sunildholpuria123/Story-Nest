@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 @HiltViewModel
 class CreateStoryViewModel @Inject constructor(
@@ -438,6 +439,17 @@ class CreateStoryViewModel @Inject constructor(
 
                 "Network error. " +
                         "Please check your connection and try again."
+            }
+            is HttpException -> {
+                when (throwable.code()) {
+                    401 -> "Please login again to generate stories."
+
+                    429 -> "You have reached your daily story limit. Please try again tomorrow."
+
+                    503 -> "Story service is temporarily unavailable. Please try again."
+
+                    else -> "Unable to create the story. Please try again."
+                }
             }
 
             else -> {

@@ -69,14 +69,17 @@ fun CreateStoryScreen(
     // ---------------------------------------------------------
 
     LaunchedEffect(Unit) {
-
         viewModel.story.collect { story ->
 
             navController.navigate(
-                Screen.Reader.createRoute(
-                    story.id
-                )
-            )
+                Screen.Reader.createRoute(story.id)
+            ) {
+                popUpTo(Screen.Create.route) {
+                    inclusive = true
+                }
+
+                launchSingleTop = true
+            }
         }
     }
 

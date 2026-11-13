@@ -1,24 +1,17 @@
+
 package com.sd.storyteller.data.remote.api
 
-/**
- * Created by SDHOLPURIA on 01-08-2026.
- */
-import com.sd.storyteller.data.remote.model.GeminiRequest
 import com.sd.storyteller.data.remote.model.GeminiResponse
+import com.sd.storyteller.data.remote.model.StoryNestGenerateRequest
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface GeminiApi {
 
-    @POST("v1beta/models/gemini-flash-latest:generateContent")
+    @POST("api/v1/stories/generate")
     suspend fun generateStory(
-
-        @Query("key")
-        apiKey: String,
-
-        @Body
-        request: GeminiRequest
-
+        @Header("Authorization") authorization: String,
+        @Body request: StoryNestGenerateRequest
     ): GeminiResponse
 }
