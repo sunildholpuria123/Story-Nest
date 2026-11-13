@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.FlowRow
 import com.sd.storyteller.core.constants.StoryCategories
 import com.sd.storyteller.core.designsystem.theme.StoryNestPalette
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CategorySection(
     onCategoryClick: (String) -> Unit,
