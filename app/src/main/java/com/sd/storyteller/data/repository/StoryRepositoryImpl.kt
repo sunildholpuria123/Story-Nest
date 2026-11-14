@@ -525,4 +525,6 @@ class StoryRepositoryImpl @Inject constructor(
     }
 
 
+    private fun String.toEpochMillis(): Long =
+        Instant.parse(this).toEpochMilli()
 }
