@@ -47,7 +47,8 @@ class SettingsRepository @Inject constructor(
                 ),
 
             readerTheme =
-                getReaderTheme()
+                getReaderTheme(),
+            appThemeMode = getAppThemeMode()
         )
     }
 
@@ -161,6 +162,13 @@ class SettingsRepository @Inject constructor(
             .apply()
     }
 
+    fun getAppThemeMode(): AppThemeMode =
+        AppThemeMode.from(preferences.getString(KEY_APP_THEME_MODE, AppThemeMode.SYSTEM.name))
+
+    fun setAppThemeMode(mode: AppThemeMode) {
+        preferences.edit().putString(KEY_APP_THEME_MODE, mode.name).apply()
+    }
+
     // =========================================================
 // Story Generation Limit
 // =========================================================
@@ -252,6 +260,7 @@ return 3
 
         private const val KEY_READER_THEME =
             "reader_theme"
+        private const val KEY_APP_THEME_MODE = "app_theme_mode"
 
         private const val DEFAULT_READ_ALOUD =
             true
