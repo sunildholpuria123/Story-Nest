@@ -30,6 +30,10 @@ class SupabaseAuthRepository @Inject constructor(
         password: String
     ): Result<AuthResponse> = safeRequest {
         api.signUp(apiKey, AuthRequest(email, password))
+    }.onSuccess { response ->
+        // Persist the session when Supabase returns one (email confirmation
+        // settings may cause signup to return a user without a session).
+        saveSession(response)
     }
 
     suspend fun signIn(
