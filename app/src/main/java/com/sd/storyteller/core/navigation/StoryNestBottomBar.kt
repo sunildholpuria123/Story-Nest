@@ -10,7 +10,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
@@ -41,7 +40,7 @@ fun StoryNestBottomBar(
                     navController.navigate(destination.screen.route) {
 
                         popUpTo(
-                            navController.graph.findStartDestination().id
+                            Screen.Home.route
                         ) {
                             saveState = true
                         }
