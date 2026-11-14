@@ -68,6 +68,7 @@ class SettingsViewModel @Inject constructor(
 
                         readerTheme =
                             settings.readerTheme,
+                        appThemeMode = settings.appThemeMode,
 
                         isLoading = false,
 
@@ -177,6 +178,11 @@ class SettingsViewModel @Inject constructor(
                             event.theme
                     )
                 }
+            }
+
+            is SettingsEvent.AppThemeModeChanged -> {
+                settingsRepository.setAppThemeMode(event.mode)
+                _uiState.update { it.copy(appThemeMode = event.mode) }
             }
 
             // -------------------------------------------------
