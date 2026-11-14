@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.sd.storyteller.core.designsystem.theme.StoryNestPalette
 
 @Composable
 fun ReadingProgress(
@@ -45,14 +46,16 @@ fun ReadingProgress(
             Text(
                 text = "Reading",
                 style =
-                    MaterialTheme.typography.labelMedium
+                    MaterialTheme.typography.labelMedium,
+                color = StoryNestPalette.TextPrimary
             )
 
             Text(
                 text =
                     "$current / $totalSentences",
                 style =
-                    MaterialTheme.typography.labelMedium
+                    MaterialTheme.typography.labelMedium,
+                color = StoryNestPalette.TextPrimary
             )
         }
 
