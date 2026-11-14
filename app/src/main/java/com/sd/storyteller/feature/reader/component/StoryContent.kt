@@ -147,11 +147,11 @@ fun StoryContent(
                         isSpeaking
                     ) {
 
-                        Color(0xFF182033)
+                        Color(0xFF111827)
 
                     } else {
 
-                        Color(0xFF30394D)
+                        Color(0xFF202124)
                     },
 
                 label =
