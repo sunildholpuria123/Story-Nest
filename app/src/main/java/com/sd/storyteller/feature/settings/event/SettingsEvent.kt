@@ -1,5 +1,6 @@
 package com.sd.storyteller.feature.settings.event
 
+import com.sd.storyteller.core.setting.AppThemeMode
 import com.sd.storyteller.core.constants.StoryLanguage
 import com.sd.storyteller.ui.theme.StoryTheme
 
@@ -20,6 +21,8 @@ sealed interface SettingsEvent {
     data class MusicChanged(
         val enabled: Boolean
     ) : SettingsEvent
+
+    data class AppThemeModeChanged(val mode: AppThemeMode) : SettingsEvent
 
     data class ReaderThemeChanged(
         val theme: StoryTheme
