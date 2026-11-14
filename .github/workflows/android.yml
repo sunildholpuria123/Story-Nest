@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - bug_fix
   pull_request:
     branches:
       - main
@@ -57,7 +58,11 @@ jobs:
       - name: Rename debug APK with version
         shell: bash
         run: |
-          VERSION_NAME=$(grep -oP 'versionName\\s*=\\s*"\\K[^"]+' app/build.gradle.kts)
+          VERSION_NAME=$(sed -nE 's/.*versionName = "([^"]+)".*/\1/p' app/build.gradle.kts | head -n 1)
+          if [ -z "$VERSION_NAME" ]; then
+            echo "Unable to read versionName from app/build.gradle.kts"
+            exit 1
+          fi
           APK_DIR="app/build/outputs/apk/debug"
           cp "$APK_DIR/app-debug.apk" "$APK_DIR/story_nest_debug_v${VERSION_NAME}.apk"
           echo "Created story_nest_debug_v${VERSION_NAME}.apk"
