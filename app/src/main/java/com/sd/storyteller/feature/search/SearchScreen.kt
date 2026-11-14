@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.sd.storyteller.core.designsystem.theme.StoryNestPalette
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -101,9 +102,19 @@ fun SearchScreen(
 
                 placeholder = {
                     Text(
-                        "Search stories, characters..."
+                        "Search stories, characters...",
+                        color = StoryNestPalette.TextHint
                     )
-                }
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = StoryNestPalette.TextPrimary,
+                    unfocusedTextColor = StoryNestPalette.TextPrimary,
+                    cursorColor = StoryNestPalette.Primary,
+                    focusedLabelColor = StoryNestPalette.Primary,
+                    unfocusedLabelColor = StoryNestPalette.TextSecondary,
+                    focusedBorderColor = StoryNestPalette.Primary,
+                    unfocusedBorderColor = StoryNestPalette.TextHint
+                )
             )
 
             Spacer(
