@@ -10,20 +10,24 @@ plugins {
 }
 
 val localProperties = Properties()
-val localPropertiesFile =
-    rootProject.file("local.properties")
-
+val localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
-    localPropertiesFile.inputStream().use {
-        localProperties.load(it)
-    }
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
-val storyNestApiUrl = providers.gradleProperty(
-    "STORYNEST_API_BASE_URL"
-).orElse(
-    localProperties.getProperty("STORYNEST_API_BASE_URL")
-        ?: "https://storynest-backend.storynest-sunil.workers.dev/"
-).get()
+
+fun configValue(name: String, defaultValue: String = ""): String =
+    System.getenv(name)
+        ?: providers.gradleProperty(name).orNull
+        ?: localProperties.getProperty(name)
+        ?: defaultValue
+
+val storyNestApiUrl = configValue(
+    "STORYNEST_API_BASE_URL",
+    "https://storynest-backend.storynest-sunil.workers.dev/"
+)
+val supabaseUrl = configValue("SUPABASE_URL", "https://example.supabase.co/")
+val supabasePublishableKey = configValue("SUPABASE_PUBLISHABLE_KEY")
+
 android {
     namespace = "com.sd.storyteller"
     compileSdk = 35
@@ -37,34 +41,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // This is your Cloudflare Worker URL, not a Gemini API key.
-        // Add STORYNEST_API_BASE_URL to local.properties for your deployment.
-        defaultConfig {
-            buildConfigField(
-                "String",
-                "STORYNEST_API_BASE_URL",
-                "\"$storyNestApiUrl\""
-            )
-        }
-
-        buildConfigField(
-            "String",
-            "SUPABASE_URL",
-            "\"${localProperties.getProperty(
-                "SUPABASE_URL",
-                "https://example.supabase.co/"
-            )}\""
-        )
-
-        buildConfigField(
-            "String",
-            "SUPABASE_PUBLISHABLE_KEY",
-            "\"${localProperties.getProperty(
-                "SUPABASE_PUBLISHABLE_KEY",
-                ""
-            )}\""
-        )
-
+        buildConfigField("String", "STORYNEST_API_BASE_URL", "\"$storyNestApiUrl\"")
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"$supabasePublishableKey\"")
     }
 
     buildTypes {
@@ -76,10 +55,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -103,66 +84,37 @@ kotlin {
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
-
     implementation(libs.androidx.core.ktx)
-
     implementation(libs.androidx.lifecycle.runtime.ktx)
-
     implementation(libs.androidx.activity.compose)
-
     implementation(libs.androidx.compose.ui)
-
     implementation(libs.androidx.compose.ui.graphics)
-
     implementation(libs.androidx.compose.ui.tooling.preview)
-
     implementation(libs.androidx.material3)
-
     implementation(libs.androidx.compose.foundation)
-
     implementation(libs.androidx.navigation.compose)
-
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
     implementation(libs.androidx.lifecycle.runtime.compose)
-
     implementation(libs.dagger.hilt)
-
     implementation(libs.androidx.hilt.navigation)
     implementation(libs.androidx.ui.graphics)
-
     ksp(libs.dagger.hilt.compiler)
-
     implementation(libs.androidx.room.runtime)
-
     implementation(libs.androidx.room.ktx)
-
     ksp(libs.androidx.room.compiler)
-
     implementation(libs.coil.compose)
-
     implementation(libs.coil.network.okhttp)
-
     implementation(libs.datastore)
-
     implementation(libs.timber)
-
     implementation(libs.lottie.compose)
-
     implementation(libs.androidx.camera.core)
-
     implementation(libs.androidx.camera.camera2)
-
     implementation(libs.androidx.camera.lifecycle)
-
     implementation(libs.androidx.camera.view)
-
     debugImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.compose.ui.tooling)
-
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.core.splashscreen)
-
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.junit)
@@ -171,12 +123,9 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlinx)
-
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
-
     implementation(libs.kotlinx.serialization.json)
-
 }
 
 configurations.all {
