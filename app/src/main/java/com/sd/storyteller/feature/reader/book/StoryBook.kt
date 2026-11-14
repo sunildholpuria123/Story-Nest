@@ -61,10 +61,10 @@ fun StoryBook(
 
         shape = RoundedCornerShape(28.dp),
 
+        // An opaque reading surface keeps text readable over every animated
+        // reader background and in both app light/dark modes.
         colors = CardDefaults.cardColors(
-            containerColor = Color.White.copy(
-                alpha = 0.16f
-            )
+            containerColor = Color(0xFFFFFBF2)
         ),
 
         elevation = CardDefaults.cardElevation(
@@ -78,9 +78,7 @@ fun StoryBook(
 
             Text(
                 text = title,
-                color = MaterialTheme
-                    .colorScheme
-                    .onSurface,
+                color = Color(0xFF182033),
 
                 style = MaterialTheme
                     .typography
