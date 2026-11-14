@@ -96,9 +96,7 @@ fun HomeScreen(
 
                 onClick = {
 
-                    navController.navigate(
-                        Screen.Search.route
-                    )
+                    navController.navigate(Screen.Search.route) { launchSingleTop = true }
                 }
             )
 
@@ -128,9 +126,7 @@ fun HomeScreen(
 
                 onCreateStory = {
 
-                    navController.navigate(
-                        Screen.Create.route
-                    )
+                    navController.navigate(Screen.Create.route) { launchSingleTop = true }
                 }
             )
 
@@ -148,10 +144,7 @@ fun HomeScreen(
 
                 onCategoryClick = { category ->
 
-                    navController.navigate(
-                        Screen.Category
-                            .createRoute(category)
-                    )
+                    navController.navigate(Screen.Category.createRoute(category)) { launchSingleTop = true }
                 }
             )
 
@@ -172,10 +165,7 @@ fun HomeScreen(
 
                 onStoryClick = { storyId ->
 
-                    navController.navigate(
-                        Screen.Reader
-                            .createRoute(storyId)
-                    )
+                    navController.navigate(Screen.Reader.createRoute(storyId)) { launchSingleTop = true }
                 }
             )
         }
