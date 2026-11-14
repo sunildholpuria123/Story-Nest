@@ -123,12 +123,7 @@ fun StoryContent(
                         isSpeaking
                     ) {
 
-                        MaterialTheme
-                            .colorScheme
-                            .primary
-                            .copy(
-                                alpha = 0.15f
-                            )
+                        Color(0xFFE8E0FF)
 
                     } else {
 
@@ -152,13 +147,11 @@ fun StoryContent(
                         isSpeaking
                     ) {
 
-                        StoryNestPalette
-                            .TextPrimary
+                        Color(0xFF182033)
 
                     } else {
 
-                        StoryNestPalette
-                            .TextSecondary
+                        Color(0xFF30394D)
                     },
 
                 label =
