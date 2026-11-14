@@ -25,7 +25,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,16 +67,6 @@ fun SettingsScreen(
     }
     val syncState by syncViewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(authState.isLoading, authState.isAuthenticated) {
-        if (!authState.isLoading && !authState.isAuthenticated) {
-            navController.navigate(Screen.Auth.route) {
-                popUpTo(Screen.Home.route) {
-                    inclusive = true
-                }
-                launchSingleTop = true
-            }
-        }
-    }
     val navigateBack = {
         navController.popBackStack()
     }
@@ -549,7 +538,12 @@ fun SettingsScreen(
                 TextButton(
                     onClick = {
                         showLogoutDialog = false
-                        authViewModel.logout()
+                        authViewModel.logout {
+                            navController.navigate(Screen.Auth.route) {
+                                popUpTo(Screen.Home.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
                     }
                 ) {
                     Text("Logout")
