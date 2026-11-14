@@ -19,6 +19,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -64,7 +65,8 @@ fun StoryBook(
         // An opaque reading surface keeps text readable over every animated
         // reader background and in both app light/dark modes.
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFFFFBF2)
+            containerColor = Color(0xFFFFFBF2),
+            contentColor = Color(0xFF202124)
         ),
 
         elevation = CardDefaults.cardElevation(
@@ -78,7 +80,7 @@ fun StoryBook(
 
             Text(
                 text = title,
-                color = Color(0xFF182033),
+                color = Color(0xFF202124),
 
                 style = MaterialTheme
                     .typography
