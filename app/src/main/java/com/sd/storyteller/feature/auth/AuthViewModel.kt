@@ -28,7 +28,7 @@ class AuthViewModel @Inject constructor(
     private val storyRepository: StoryRepositoryImpl
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AuthUiState())
+    private val _uiState = MutableStateFlow(AuthUiState(isLoading = true))
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
     init {
@@ -104,13 +104,14 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun logout() {
+    fun logout(onLoggedOut: () -> Unit = {}) {
         viewModelScope.launch {
             _uiState.value = AuthUiState(isLoading = true)
 
             repository.signOut()
 
             _uiState.value = AuthUiState()
+            onLoggedOut()
         }
     }
 
