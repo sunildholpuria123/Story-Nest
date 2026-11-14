@@ -297,12 +297,7 @@ fun LibraryScreen(
 
                                         onClick = {
 
-                                            navController.navigate(
-                                                Screen.Reader
-                                                    .createRoute(
-                                                        story.id
-                                                    )
-                                            )
+                                            navController.navigate(Screen.Reader.createRoute(story.id)) { launchSingleTop = true }
                                         },
 
                                         onDelete = {
