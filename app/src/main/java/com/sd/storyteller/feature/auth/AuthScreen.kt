@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.sd.storyteller.core.designsystem.theme.StoryNestPalette
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -37,7 +38,8 @@ fun AuthScreen(
     ) {
         Text(
             text = if (isLogin) "Welcome to StoryNest" else "Create your account",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium,
+            color = StoryNestPalette.TextPrimary
         )
 
         Spacer(Modifier.height(24.dp))
@@ -50,7 +52,16 @@ fun AuthScreen(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = StoryNestPalette.TextPrimary,
+                unfocusedTextColor = StoryNestPalette.TextPrimary,
+                cursorColor = StoryNestPalette.Primary,
+                focusedLabelColor = StoryNestPalette.Primary,
+                unfocusedLabelColor = StoryNestPalette.TextSecondary,
+                focusedBorderColor = StoryNestPalette.Primary,
+                unfocusedBorderColor = StoryNestPalette.TextHint
+            )
         )
 
         Spacer(Modifier.height(12.dp))
@@ -64,7 +75,16 @@ fun AuthScreen(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password
             ),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = StoryNestPalette.TextPrimary,
+                unfocusedTextColor = StoryNestPalette.TextPrimary,
+                cursorColor = StoryNestPalette.Primary,
+                focusedLabelColor = StoryNestPalette.Primary,
+                unfocusedLabelColor = StoryNestPalette.TextSecondary,
+                focusedBorderColor = StoryNestPalette.Primary,
+                unfocusedBorderColor = StoryNestPalette.TextHint
+            )
         )
 
         Spacer(Modifier.height(20.dp))
