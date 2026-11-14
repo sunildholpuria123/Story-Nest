@@ -19,5 +19,7 @@ data class AppSettings(
         false,
 
     val readerTheme: StoryTheme =
-        StoryTheme.BEDTIME
+        StoryTheme.BEDTIME,
+
+    val appThemeMode: AppThemeMode = AppThemeMode.SYSTEM
 )
