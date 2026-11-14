@@ -18,6 +18,7 @@ import com.sd.storyteller.feature.create.model.StoryTopic
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
+import java.time.Instant
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -373,7 +374,7 @@ class StoryRepositoryImpl @Inject constructor(
 
             val storiesToUpload = localStories.filter { local ->
                 val cloud = cloudMap[local.cloudId]
-                cloud == null || local.updatedAt > cloud.updatedAt
+                cloud == null || local.updatedAt > cloud.updatedAt.toEpochMillis()
             }
 
             if (storiesToUpload.isEmpty()) {
@@ -394,9 +395,9 @@ class StoryRepositoryImpl @Inject constructor(
                     },
                     language = story.language,
                     isFavorite = story.isFavorite,
-                    createdAt = story.createdAt,
+                    createdAt = Instant.ofEpochMilli(story.createdAt).toString(),
                     lastReadSentence = story.lastReadSentence,
-                    updatedAt = story.updatedAt,
+                    updatedAt = Instant.ofEpochMilli(story.updatedAt).toString(),
                     isDeleted = story.isDeleted
                 )
             }
@@ -454,7 +455,7 @@ class StoryRepositoryImpl @Inject constructor(
                 // Only download if cloud version is newer
                 if (
                     existingStory == null ||
-                    cloudStory.updatedAt > existingStory.updatedAt
+                    cloudStory.updatedAt.toEpochMillis() > existingStory.updatedAt
                 ) {
                     val topic = cloudStory.topic?.let {
                         runCatching {
@@ -473,9 +474,9 @@ class StoryRepositoryImpl @Inject constructor(
                         topic = topic,
                         language = cloudStory.language,
                         isFavorite = cloudStory.isFavorite,
-                        createdAt = cloudStory.createdAt,
+                        createdAt = cloudStory.createdAt.toEpochMillis(),
                         lastReadSentence = cloudStory.lastReadSentence,
-                        updatedAt = cloudStory.updatedAt,
+                        updatedAt = cloudStory.updatedAt.toEpochMillis(),
                         isDeleted = cloudStory.isDeleted
                     )
 
