@@ -6,6 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.sd.storyteller.core.setting.AppThemeMode
+import com.sd.storyteller.core.designsystem.theme.AppThemeViewModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sd.storyteller.core.designsystem.theme.StoryNestTheme
@@ -18,7 +23,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            StoryNestTheme {
+            val themeViewModel: AppThemeViewModel = hiltViewModel()
+            val themeMode by themeViewModel.themeMode.collectAsStateWithLifecycle()
+            val darkTheme = when (themeMode) {
+                AppThemeMode.SYSTEM -> androidx.compose.foundation.isSystemInDarkTheme()
+                AppThemeMode.LIGHT -> false
+                AppThemeMode.DARK -> true
+            }
+            StoryNestTheme(darkTheme = darkTheme) {
                 StoryNestRoot()
             }
         }
