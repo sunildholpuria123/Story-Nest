@@ -525,6 +525,21 @@ class StoryRepositoryImpl @Inject constructor(
     }
 
 
-    private fun String.toEpochMillis(): Long =
-        Instant.parse(this).toEpochMilli()
+    /**
+     * Supports current Supabase timestamptz ISO values and legacy records
+     * that were previously stored as epoch milliseconds (or seconds).
+     */
+    private fun String.toEpochMillis(): Long {
+        val value = trim()
+
+        value.toLongOrNull()?.let { timestamp ->
+            return if (timestamp in -99_999_999_999L..99_999_999_999L) {
+                timestamp * 1_000L
+            } else {
+                timestamp
+            }
+        }
+
+        return Instant.parse(value).toEpochMilli()
+    }
 }
