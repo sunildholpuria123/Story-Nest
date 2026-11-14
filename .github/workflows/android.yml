@@ -54,8 +54,16 @@ jobs:
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
+      - name: Rename debug APK with version
+        shell: bash
+        run: |
+          VERSION_NAME=$(grep -oP 'versionName\\s*=\\s*"\\K[^"]+' app/build.gradle.kts)
+          APK_DIR="app/build/outputs/apk/debug"
+          cp "$APK_DIR/app-debug.apk" "$APK_DIR/story_nest_debug_v${VERSION_NAME}.apk"
+          echo "Created story_nest_debug_v${VERSION_NAME}.apk"
+
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: StoryNest-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: story_nest_debug_v${{ github.run_number }}
+          path: app/build/outputs/apk/debug/story_nest_debug_v*.apk
