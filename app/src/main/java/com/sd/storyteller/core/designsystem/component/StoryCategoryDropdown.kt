@@ -10,6 +10,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import com.sd.storyteller.core.designsystem.theme.StoryNestPalette
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -49,6 +51,18 @@ fun StoryCategoryDropdown(
             onValueChange = {},
             readOnly = true,
             singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = StoryNestPalette.TextPrimary,
+                unfocusedTextColor = StoryNestPalette.TextPrimary,
+                disabledTextColor = StoryNestPalette.TextSecondary,
+                cursorColor = StoryNestPalette.Primary,
+                focusedBorderColor = StoryNestPalette.Primary,
+                unfocusedBorderColor = StoryNestPalette.TextHint,
+                focusedLabelColor = StoryNestPalette.Primary,
+                unfocusedLabelColor = StoryNestPalette.TextSecondary,
+                focusedContainerColor = StoryNestPalette.Background,
+                unfocusedContainerColor = StoryNestPalette.Background
+            ),
             label = {
                 if (label != null) {
                     Text(label)
