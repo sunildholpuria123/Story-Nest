@@ -1,5 +1,6 @@
 package com.sd.storyteller.feature.settings.state
 
+import com.sd.storyteller.core.setting.AppThemeMode
 import com.sd.storyteller.core.constants.StoryLanguage
 import com.sd.storyteller.ui.theme.StoryTheme
 
@@ -20,6 +21,8 @@ data class SettingsUiState(
 
     val readerTheme: StoryTheme =
         StoryTheme.BEDTIME,
+
+    val appThemeMode: AppThemeMode = AppThemeMode.SYSTEM,
 
     val isLoading: Boolean =
         true,
