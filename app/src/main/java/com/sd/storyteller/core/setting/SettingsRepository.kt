@@ -6,6 +6,8 @@ import com.sd.storyteller.ui.theme.StoryTheme
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Created by SDHOLPURIA on 08-08-2026.
@@ -22,6 +24,9 @@ class SettingsRepository @Inject constructor(
             PREFS_NAME,
             Context.MODE_PRIVATE
         )
+
+    private val _appThemeMode = MutableStateFlow(getAppThemeMode())
+    val appThemeMode = _appThemeMode.asStateFlow()
 
     // =========================================================
     // Read Settings
@@ -167,6 +172,7 @@ class SettingsRepository @Inject constructor(
 
     fun setAppThemeMode(mode: AppThemeMode) {
         preferences.edit().putString(KEY_APP_THEME_MODE, mode.name).apply()
+        _appThemeMode.value = mode
     }
 
     // =========================================================
