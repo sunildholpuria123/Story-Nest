@@ -1,5 +1,7 @@
 package com.sd.storyteller.core.navigation
 
+import android.net.Uri
+
 /**
  * Created by SDHOLPURIA on 31-07-2026.
  */
@@ -50,7 +52,7 @@ sealed class Screen(
         fun createRoute(
             category: String
         ): String {
-            return "category/$category"
+            return "category/${Uri.encode(category)}"
         }
     }
 
