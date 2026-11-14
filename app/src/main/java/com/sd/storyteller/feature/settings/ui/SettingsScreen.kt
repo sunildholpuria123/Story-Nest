@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.sd.storyteller.core.setting.AppThemeMode
 import com.sd.storyteller.core.constants.StoryLanguage
 import com.sd.storyteller.core.designsystem.component.StoryDropdown
 import com.sd.storyteller.core.designsystem.dimention.StoryNestDimens
@@ -197,6 +198,38 @@ fun SettingsScreen(
                     // =================================================
                     // Story Preferences
                     // =================================================
+
+                    Text(
+                        text = "Appearance",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = StoryNestPalette.TextPrimary
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = "Choose how StoryNest follows your device or uses a fixed theme.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = StoryNestPalette.TextSecondary
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    StoryDropdown(
+                        label = "App Theme",
+                        value = when (uiState.appThemeMode) {
+                            AppThemeMode.SYSTEM -> "System default"
+                            AppThemeMode.LIGHT -> "Light"
+                            AppThemeMode.DARK -> "Dark"
+                        },
+                        items = listOf("System default", "Light", "Dark"),
+                        onSelected = { selected ->
+                            val mode = when (selected) {
+                                "Light" -> AppThemeMode.LIGHT
+                                "Dark" -> AppThemeMode.DARK
+                                else -> AppThemeMode.SYSTEM
+                            }
+                            viewModel.onEvent(SettingsEvent.AppThemeModeChanged(mode))
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(Modifier.height(StoryNestDimens.Space32))
 
                     Text(
                         text = "Story Preferences",
